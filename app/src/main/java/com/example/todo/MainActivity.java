@@ -3,12 +3,13 @@ package com.example.todo;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +24,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Инициализация Toolbar
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
-            setSupportActionBar(toolbar); // Работает только с темой без ActionBar
+            setSupportActionBar(toolbar);
         } else {
             Toast.makeText(this, "Toolbar не найден", Toast.LENGTH_SHORT).show();
         }
 
         recyclerView = findViewById(R.id.recyclerView);
-        Button addTaskButton = findViewById(R.id.addTaskButton);
+        FloatingActionButton addTaskButton = findViewById(R.id.addTaskButton);
 
         if (recyclerView == null) {
             Toast.makeText(this, "RecyclerView не найден", Toast.LENGTH_SHORT).show();
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else {
             addTaskButton.setOnClickListener(v -> {
+                v.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
                 Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
                 startActivityForResult(intent, 1);
             });
@@ -71,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
             protected List<Task> doInBackground(Void... voids) {
                 try {
                     List<Task> tasks = dbHelper.getAllTasks();
-                    System.out.println("Получено задач: " + tasks.size());
-                    return tasks;
+                    System.out.println("Получено задач: " + (tasks != null ? tasks.size() : "null"));
+                    return tasks != null ? tasks : new ArrayList<>();
                 } catch (Exception e) {
                     System.out.println("Ошибка при загрузке задач: " + e.getMessage());
                     return new ArrayList<>();
@@ -81,11 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(List<Task> tasks) {
-                taskList.clear();
-                taskList.addAll(tasks);
-                if (taskAdapter != null) {
-                    taskAdapter.notifyDataSetChanged();
-                    Toast.makeText(MainActivity.this, "Загружено задач: " + tasks.size(), Toast.LENGTH_SHORT).show();
+                if (taskList != null) {
+                    taskList.clear();
+                    taskList.addAll(tasks != null ? tasks : new ArrayList<>());
+                    if (taskAdapter != null) {
+                        taskAdapter.notifyDataSetChanged();
+                        Toast.makeText(MainActivity.this, "Загружено задач: " + (tasks != null ? tasks.size() : 0), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }.execute();
@@ -107,10 +111,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Ошибка удаления задачи: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 }
