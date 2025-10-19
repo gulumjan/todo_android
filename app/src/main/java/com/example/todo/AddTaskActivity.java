@@ -2,13 +2,12 @@ package com.example.todo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class AddTaskActivity extends AppCompatActivity {
-    private EditText titleEditText, descriptionEditText;
+    private TextInputEditText titleEditText, descriptionEditText;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -18,7 +17,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         titleEditText = findViewById(R.id.titleEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
-        Button saveButton = findViewById(R.id.saveButton);
+        com.google.android.material.button.MaterialButton saveButton = findViewById(R.id.saveButton);
 
         dbHelper = new DatabaseHelper(this);
 
@@ -27,7 +26,7 @@ public class AddTaskActivity extends AppCompatActivity {
             String description = descriptionEditText.getText().toString().trim();
 
             if (title.isEmpty()) {
-                Toast.makeText(this, "Title cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Заголовок не может быть пустым", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -37,7 +36,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 finish();
             } catch (Exception e) {
-                Toast.makeText(this, "Error saving task: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Ошибка сохранения задачи: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
