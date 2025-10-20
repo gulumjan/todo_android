@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">To-Do List</string>
     <string name="add_task">Add New Task</string>
     <string name="task_title">Task Title</string>
     <string name="task_description">Task Description</string>
+    <string name="task_deadline">Deadline (optional)</string>
     <string name="save_task">Save Task</string>
 </resources>

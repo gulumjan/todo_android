@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:padding="16dp">
+    android:background="#000000"
+
+    android:padding="76dp">
+
 
     <!-- EditText для заголовка -->
     <com.google.android.material.textfield.TextInputLayout
@@ -35,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/titleInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/descriptionEditText"
@@ -44,7 +46,28 @@
             android:hint="@string/task_description"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:gravity="top"
+            android:gravity="center"
+            android:textColorHint="#757575"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- EditText для deadline -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/deadlineInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/descriptionInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deadlineEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_deadline"
+            android:inputType="none"
+            android:focusable="false"
             android:textColorHint="#757575"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -55,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_task"
-        app:layout_constraintTop_toBottomOf="@id/descriptionInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/deadlineInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
